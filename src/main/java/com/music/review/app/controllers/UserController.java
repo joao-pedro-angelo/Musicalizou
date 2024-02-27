@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("users")
@@ -33,12 +32,12 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserGetDTO> findByIdUser(@PathVariable UUID id){
+    public ResponseEntity<UserGetDTO> findByIdUser(@PathVariable Long id){
         UserGetDTO userGetDTO = this.userService.findById(id);
         return new ResponseEntity<>(userGetDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<UserGetDTO> findByEmailUser(@PathVariable String email){
         UserGetDTO userGetDTO = this.userService.findByEmail(email);
         return new ResponseEntity<>(userGetDTO, HttpStatus.OK);
@@ -51,7 +50,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<Object> deleteUser(@PathVariable UUID id){
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id){
         this.userService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

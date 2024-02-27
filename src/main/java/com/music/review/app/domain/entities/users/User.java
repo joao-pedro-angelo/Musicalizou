@@ -3,7 +3,6 @@ package com.music.review.app.domain.entities.users;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,8 +13,8 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     //Não precisa validar aqui, pois a validação será nos DTOs
     private String email;
     private String password;

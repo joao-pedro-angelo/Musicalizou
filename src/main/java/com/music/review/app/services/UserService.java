@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,12 +25,11 @@ public class UserService {
 
     public UserGetDTO saveUser(UserCreateDTO userCreateDTO){
         User user = new User(userCreateDTO);
-        UserGetDTO userGetDTO = new UserGetDTO(user);
         this.userRepository.save(user);
-        return userGetDTO;
+        return new UserGetDTO(user);
     }
 
-    public UserGetDTO findById(UUID id){
+    public UserGetDTO findById(Long id){
         Optional<User> userOptional = this.userRepository.findById(id);
         if (userOptional.isPresent()){
             User user = userOptional.get();
@@ -58,7 +56,7 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public void deleteById(UUID id){
+    public void deleteById(Long id){
         this.userRepository.deleteById(id);
     }
 
