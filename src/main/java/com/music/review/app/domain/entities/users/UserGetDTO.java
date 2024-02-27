@@ -1,7 +1,9 @@
 package com.music.review.app.domain.entities.users;
 
+import java.util.UUID;
+
 public record UserGetDTO(
-        Long id,
+        UUID id,
         String email
 )
 {
