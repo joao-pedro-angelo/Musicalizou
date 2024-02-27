@@ -25,7 +25,7 @@ public class User {
 
     public void updateUser(UserUpdateDTO userUpdateDTO){
         if (userUpdateDTO.email() != null) this.email = userUpdateDTO.email();
-        if (userUpdateDTO.password() != null) this.email = userUpdateDTO.password();
+        if (userUpdateDTO.password() != null) this.password = userUpdateDTO.password();
     }
 
 }
