@@ -23,12 +23,14 @@ public class Music {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name_music")
     private String nameMusic;
 
     @OneToMany(mappedBy = "music")
     private List<Review> reviews = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "music_gen")
     private MusicGen musicGen;
 
     public Music(MusicCreateDTO musicCreateDTO){
