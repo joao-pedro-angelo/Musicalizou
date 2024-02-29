@@ -1,4 +1,4 @@
-package com.music.review.app.domain.entities.users;
+package com.music.review.app.domain.entities.users.dtos;
 
 import jakarta.validation.constraints.NotNull;
 

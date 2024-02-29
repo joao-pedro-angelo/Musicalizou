@@ -1,8 +1,8 @@
 package com.music.review.app.controllers;
 
 import com.music.review.app.domain.entities.users.User;
-import com.music.review.app.domain.entities.users.UserCreateDTO;
-import com.music.review.app.domain.entities.users.UserUpdateDTO;
+import com.music.review.app.domain.entities.users.dtos.UserCreateDTO;
+import com.music.review.app.domain.entities.users.dtos.UserUpdateDTO;
 import com.music.review.app.domain.repositories.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

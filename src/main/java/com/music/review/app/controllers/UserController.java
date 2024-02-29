@@ -1,8 +1,8 @@
 package com.music.review.app.controllers;
 
-import com.music.review.app.domain.entities.users.UserCreateDTO;
-import com.music.review.app.domain.entities.users.UserGetDTO;
-import com.music.review.app.domain.entities.users.UserUpdateDTO;
+import com.music.review.app.domain.entities.users.dtos.UserCreateDTO;
+import com.music.review.app.domain.entities.users.dtos.UserGetDTO;
+import com.music.review.app.domain.entities.users.dtos.UserUpdateDTO;
 import com.music.review.app.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

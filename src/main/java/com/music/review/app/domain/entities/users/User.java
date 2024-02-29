@@ -1,5 +1,7 @@
 package com.music.review.app.domain.entities.users;
 
+import com.music.review.app.domain.entities.users.dtos.UserCreateDTO;
+import com.music.review.app.domain.entities.users.dtos.UserUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
