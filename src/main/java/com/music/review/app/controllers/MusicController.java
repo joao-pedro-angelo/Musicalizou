@@ -71,6 +71,7 @@ public class MusicController {
     }
 
     @PostMapping("/reviews")
+    @Transactional
     public ResponseEntity<ReviewGetDTO> createReview(@RequestBody @Valid ReviewCreateDTO reviewCreateDTO){
         ReviewGetDTO reviewGetDTO = this.musicService.addReview(reviewCreateDTO);
         return new ResponseEntity<>(reviewGetDTO, HttpStatus.OK);
