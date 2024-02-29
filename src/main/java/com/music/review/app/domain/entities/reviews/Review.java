@@ -1,7 +1,7 @@
 package com.music.review.app.domain.entities.reviews;
 
 import com.music.review.app.domain.entities.musics.Music;
-import com.music.review.app.domain.entities.reviews.dtos.ReviewUpdateDTO;
+import com.music.review.app.domain.entities.reviews.dtos.ReviewCreateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,8 +24,8 @@ public class Review {
     @JoinColumn(name = "music_id")
     private Music music;
 
-    public void updateReview(ReviewUpdateDTO reviewUpdateDTO){
-        if (reviewUpdateDTO.comment() != null) this.comment = reviewUpdateDTO.comment();
-        if (reviewUpdateDTO.music() != null) this.music = reviewUpdateDTO.music();
+    public Review(ReviewCreateDTO reviewCreateDTO, Music music){
+        this.comment = reviewCreateDTO.comment();
+        this.music = music;
     }
 }
