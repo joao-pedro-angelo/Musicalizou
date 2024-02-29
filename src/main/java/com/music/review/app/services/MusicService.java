@@ -79,7 +79,7 @@ public class MusicService {
         music.addReview(review);
     }
 
-    public List<ReviewGetDTO> findReviews(String nameMusic){
+    public List<ReviewGetDTO> findReviewsByMusicName(String nameMusic){
         Optional<Music> music = this.musicRepository.findByNameMusic(nameMusic);
         if (music.isPresent()){
             Music musicPresent = music.get();
