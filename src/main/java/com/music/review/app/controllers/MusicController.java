@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("musics")
 public class MusicController {
 
-    private MusicService musicService;
+    private final MusicService musicService;
 
     @Autowired
     public MusicController(MusicService musicService){
