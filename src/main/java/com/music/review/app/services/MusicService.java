@@ -74,9 +74,15 @@ public class MusicService {
         this.musicRepository.deleteById(id);
     }
 
-    public void addReview(Review review){
-        Music music = review.getMusic();
-        music.addReview(review);
+    public ReviewGetDTO addReview(ReviewCreateDTO review){
+        Optional<Music> music = this.musicRepository.findByNameMusic(review.musicName());
+        if (music.isPresent()) {
+            Review reviewCreated = new Review(review, music.get());
+            music.get().addReview(reviewCreated);
+            return new ReviewGetDTO(reviewCreated);
+        } else{
+            throw new EntityNotFoundException("Não há música com o nome: " + review.musicName());
+        }
     }
 
     public List<ReviewGetDTO> findReviewsByMusicName(String nameMusic){
