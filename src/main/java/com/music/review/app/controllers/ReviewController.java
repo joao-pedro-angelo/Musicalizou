@@ -8,6 +8,8 @@ import com.music.review.app.services.MusicService;
 import com.music.review.app.services.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +19,8 @@ import java.util.List;
 @RequestMapping("reviews")
 public class ReviewController {
 
-    private MusicService musicService;
-    private ReviewService reviewService;
+    private final MusicService musicService;
+    private final ReviewService reviewService;
 
     @Autowired
     public ReviewController(MusicService musicService, ReviewService reviewService){
@@ -28,14 +30,16 @@ public class ReviewController {
 
     @PostMapping
     @Transactional
-    public ReviewGetDTO createReview(@RequestBody @Valid ReviewCreateDTO reviewCreateDTO){
+    public ResponseEntity<ReviewGetDTO> createReview(@RequestBody @Valid ReviewCreateDTO reviewCreateDTO){
         Music music = this.musicService.findByName(reviewCreateDTO.musicName());
-        return this.reviewService.createReview(reviewCreateDTO, music);
+        return new ResponseEntity<>(this.reviewService.createReview(reviewCreateDTO, music),
+                HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{music}")
-    public List<Review> getReviews(@PathVariable String music){
+    public ResponseEntity<List<Review>> getReviews(@PathVariable String music){
         Music music1 = this.musicService.findByName(music);
-        return this.reviewService.getReviewByMusicName(music1);
+        return new ResponseEntity<>(this.reviewService.getReviewByMusicName(music1),
+                HttpStatus.OK);
     }
 }
