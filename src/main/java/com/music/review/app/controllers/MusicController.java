@@ -3,8 +3,6 @@ package com.music.review.app.controllers;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicGetDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
-import com.music.review.app.domain.entities.reviews.dtos.ReviewCreateDTO;
-import com.music.review.app.domain.entities.reviews.dtos.ReviewGetDTO;
 import com.music.review.app.services.MusicService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class MusicController {
 
     @GetMapping("/name/{nameMusic}")
     public ResponseEntity<MusicGetDTO> findMusicByName(@PathVariable String nameMusic){
-        MusicGetDTO musicGetDTO = this.musicService.findByName(nameMusic);
+        MusicGetDTO musicGetDTO = new MusicGetDTO(this.musicService.findByName(nameMusic));
         return new ResponseEntity<>(musicGetDTO, HttpStatus.OK);
     }
 
@@ -62,18 +60,5 @@ public class MusicController {
     public ResponseEntity<MusicGetDTO> updateMusic(MusicUpdateDTO musicUpdateDTO){
         MusicGetDTO musicGetDTO = this.musicService.update(musicUpdateDTO);
         return new ResponseEntity<>(musicGetDTO, HttpStatus.OK);
-    }
-
-    @GetMapping("/findReviews/{musicName}")
-    public ResponseEntity<List<ReviewGetDTO>> findAllReviewsByMusicName(@PathVariable String musicName){
-        return new ResponseEntity<>(this.musicService.findReviewsByMusicName(musicName),
-                HttpStatus.OK);
-    }
-
-    @PostMapping("/reviews")
-    @Transactional
-    public ResponseEntity<ReviewGetDTO> createReview(@RequestBody @Valid ReviewCreateDTO reviewCreateDTO){
-        ReviewGetDTO reviewGetDTO = this.musicService.addReview(reviewCreateDTO);
-        return new ResponseEntity<>(reviewGetDTO, HttpStatus.OK);
     }
 }

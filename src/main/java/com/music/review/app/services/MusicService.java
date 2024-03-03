@@ -4,9 +4,6 @@ import com.music.review.app.domain.entities.musics.Music;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicGetDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
-import com.music.review.app.domain.entities.reviews.Review;
-import com.music.review.app.domain.entities.reviews.dtos.ReviewCreateDTO;
-import com.music.review.app.domain.entities.reviews.dtos.ReviewGetDTO;
 import com.music.review.app.domain.repositories.MusicRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +39,10 @@ public class MusicService {
         }
     }
 
-    public MusicGetDTO findByName(String nameMusic){
+    public Music findByName(String nameMusic){
         Optional<Music> optionalMusic = this.musicRepository.findByNameMusic(nameMusic);
         if (optionalMusic.isPresent()){
-            Music music = optionalMusic.get();
-            return new MusicGetDTO(music);
+            return optionalMusic.get();
         } else{
             throw new EntityNotFoundException("Não há música com este nome: " + nameMusic);
         }
@@ -72,29 +68,5 @@ public class MusicService {
 
     public void deleteMusic(Long id){
         this.musicRepository.deleteById(id);
-    }
-
-    public ReviewGetDTO addReview(ReviewCreateDTO review){
-        Optional<Music> music = this.musicRepository.findByNameMusic(review.musicName());
-        if (music.isPresent()) {
-            Review reviewCreated = new Review(review, music.get());
-            music.get().addReview(reviewCreated);
-            return new ReviewGetDTO(reviewCreated);
-        } else{
-            throw new EntityNotFoundException("Não há música com o nome: " + review.musicName());
-        }
-    }
-
-    public List<ReviewGetDTO> findReviewsByMusicName(String nameMusic){
-        Optional<Music> music = this.musicRepository.findByNameMusic(nameMusic);
-        if (music.isPresent()){
-            Music musicPresent = music.get();
-            List<Review> reviews = musicPresent.getReviews();
-            return reviews.stream()
-                    .map(ReviewGetDTO::new)
-                    .collect(Collectors.toList());
-        } else{
-            throw new EntityNotFoundException("Não há música com o nome: " + nameMusic);
-        }
     }
 }

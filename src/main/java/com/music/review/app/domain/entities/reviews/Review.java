@@ -24,8 +24,8 @@ public class Review {
     @JoinColumn(name = "music_id")
     private Music music;
 
-    public Review(ReviewCreateDTO reviewCreateDTO, Music music){
-        this.comment = reviewCreateDTO.comment();
+    public Review(String comment, Music music){
+        this.comment = comment;
         this.music = music;
     }
 }
