@@ -125,7 +125,7 @@ class UserControllerTest {
         var response = this.mockMvc.perform(put("/users")
                         .contentType("application/json")
                         .content(this.userUpdateDTOJacksonTester.write(userUpdateDTO).getJson()))
-                .andReturn().getResponse();
+                        .andReturn().getResponse();
 
         // Verifique se o código de status HTTP é 200 (OK)
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -148,7 +148,7 @@ class UserControllerTest {
         var response = this.mockMvc.perform(put("/users")
                         .contentType("application/json")
                         .content(this.userUpdateDTOJacksonTester.write(userUpdateDTO).getJson()))
-                .andReturn().getResponse();
+                        .andReturn().getResponse();
 
         // Verifique se o código de status HTTP é 404 (Not Found)
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());

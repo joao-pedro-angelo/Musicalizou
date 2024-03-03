@@ -55,9 +55,9 @@ public class MusicController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping()
+    @PutMapping
     @Transactional
-    public ResponseEntity<MusicGetDTO> updateMusic(MusicUpdateDTO musicUpdateDTO){
+    public ResponseEntity<MusicGetDTO> updateMusic(@RequestBody @Valid MusicUpdateDTO musicUpdateDTO){
         MusicGetDTO musicGetDTO = this.musicService.update(musicUpdateDTO);
         return new ResponseEntity<>(musicGetDTO, HttpStatus.OK);
     }

@@ -96,4 +96,45 @@ public class MusicControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
         assertThat(this.musicRepository.findById(music.getId())).isEmpty();
     }
+
+    @Test
+    @Transactional
+    @DisplayName("Deve devolver código http 404 - música não encontrada para atualizar")
+    void updateMusicNotFound() throws Exception {
+        // Crie um DTO de atualização de usuário com um ID de usuário inexistente
+        MusicUpdateDTO musicUpdateDTO = new MusicUpdateDTO(100L, "novoemail@test.com", MusicGen.SERTANEJO);
+
+        // Envie uma solicitação PUT para /users com o DTO de atualização de usuário e verifique a resposta
+        var response = this.mockMvc.perform(put("/users")
+                        .contentType("application/json")
+                        .content(this.musicUpdateDTOJacksonTester.write(musicUpdateDTO).getJson()))
+                        .andReturn().getResponse();
+
+        // Verifique se o código de status HTTP é 404 (Not Found)
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Update bem sucedido")
+    void updateMusic() throws Exception{
+        Music music = new Music();
+        music.setNameMusic("Existo");
+        music.setMusicGen(MusicGen.OUTRO);
+        this.musicRepository.save(music);
+
+        MusicUpdateDTO musicUpdateDTO = new MusicUpdateDTO(music.getId(), "NaoExisto", MusicGen.SERTANEJO);
+
+        var response = this.mockMvc.perform(put("/musics")
+                        .contentType("application/json")
+                        .content(this.musicUpdateDTOJacksonTester.write(musicUpdateDTO).getJson()))
+                        .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
+
+        Music musicUpdate = this.musicRepository.findById(music.getId()).orElse(null);
+        assertThat(musicUpdate).isNotNull();
+        assertThat(musicUpdate.getNameMusic()).isEqualTo(musicUpdateDTO.nameMusic());
+        assertThat(musicUpdate.getMusicGen()).isEqualTo(musicUpdateDTO.musicGen());
+    }
 }
