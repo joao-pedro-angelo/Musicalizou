@@ -59,7 +59,7 @@ class UserControllerTest {
         var response = this.mockMvc.perform(post("/users")
                         .contentType("application/json")
                         .content(this.userCreateDTOJacksonTester.write(userCreateDTO).getJson()))
-                .andReturn().getResponse();
+                        .andReturn().getResponse();
 
         // Verifique se o código de status HTTP é 201 (Created)
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
