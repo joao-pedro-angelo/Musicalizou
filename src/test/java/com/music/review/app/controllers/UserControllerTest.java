@@ -84,7 +84,7 @@ class UserControllerTest {
         User user = new User();
         user.setEmail("emaildeletar@test.com");
         user.setPassword("senha123");
-        userRepository.save(user);
+        this.userRepository.save(user);
 
         // Envie uma solicitação DELETE para /users/{id} com o ID do usuário e verifique a resposta
         var response = this.mockMvc.perform(delete("/users/{id}", user.getId()))
@@ -94,11 +94,11 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
 
         // Verifique se o usuário foi deletado do banco de dados
-        assertThat(userRepository.findById(user.getId())).isEmpty();
+        assertThat(this.userRepository.findById(user.getId())).isEmpty();
     }
 
     @Test
-    @DisplayName("Deve devolver código http 404 - usuário não encontrado para deletar")
+    @DisplayName("Deve devolver código http 204 - No Content")
     void deleteUserNotFound() throws Exception {
         // Envie uma solicitação DELETE para /users/{id} com um ID de usuário inexistente e verifique a resposta
         var response = this.mockMvc.perform(delete("/users/{id}", 100))
@@ -116,7 +116,7 @@ class UserControllerTest {
         User user = new User();
         user.setEmail("emailatualizar@test.com");
         user.setPassword("senha123");
-        userRepository.save(user);
+        this.userRepository.save(user);
 
         // Crie um DTO de atualização de usuário com novos dados
         UserUpdateDTO userUpdateDTO = new UserUpdateDTO(user.getId(), "novoemail@test.com", "novasenha123");
@@ -131,7 +131,7 @@ class UserControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
 
         // Verifique se os dados do usuário foram atualizados corretamente no banco de dados
-        User updatedUser = userRepository.findById(user.getId()).orElse(null);
+        User updatedUser = this.userRepository.findById(user.getId()).orElse(null);
         assertThat(updatedUser).isNotNull();
         assertThat(updatedUser.getEmail()).isEqualTo(userUpdateDTO.email());
         assertThat(updatedUser.getPassword()).isEqualTo(userUpdateDTO.password());

@@ -1,5 +1,6 @@
 package com.music.review.app.controllers;
 
+import com.music.review.app.domain.entities.musics.Music;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
 import com.music.review.app.domain.entities.musics.enums.MusicGen;
@@ -16,8 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
 @SpringBootTest
@@ -63,11 +63,37 @@ public class MusicControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("Tenta encontrar música não cadastrada")
+    @DisplayName("Tenta encontrar música não cadastrada - deve devolver código 404")
     void findMusicNotFound() throws Exception{
         var response = this.mockMvc.perform(get("/musics/name/notFound"))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Tenta deletar música não cadastrada - deve devolver código 204 - No Content")
+    void deleteMusicNotFound() throws Exception{
+        var response = this.mockMvc.perform(delete("/musics/delete/2012"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("Delete com sucesso - Código 204 - No Content")
+    void deleteMusic() throws Exception{
+        Music music = new Music();
+        music.setNameMusic("Balanço da rede");
+        music.setMusicGen(MusicGen.SERTANEJO);
+        this.musicRepository.save(music);
+
+        var response = this.mockMvc.perform(delete("/musics/delete/{id}", music.getId()))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+        assertThat(this.musicRepository.findById(music.getId())).isEmpty();
     }
 }
