@@ -1,5 +1,7 @@
 package com.music.review.app.controllers;
 
+import com.music.review.app.domain.entities.artists.Artist;
+import com.music.review.app.domain.entities.artists.dtos.ArtistCreateDTO;
 import com.music.review.app.domain.entities.musics.Music;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
@@ -49,13 +51,17 @@ public class MusicControllerTest {
     @Test
     @Transactional
     @DisplayName("Deve devolver código 201 - Created")
-    void createMusicValidData() throws Exception{
-        MusicCreateDTO musicCreateDTO = new MusicCreateDTO("Balanço da Rede",
-                MusicGen.SERTANEJO);
+    void createMusicValidData() throws Exception {
+        // Cria um artista para associar à música
+        Artist artist = new Artist(new ArtistCreateDTO("Artista Teste", "1990", "Brasil", "Biografia do Artista"));
 
+        // Cria um DTO de criação de música com os dados válidos, incluindo o nome do artista
+        MusicCreateDTO musicCreateDTO = new MusicCreateDTO("Balanço da Rede", MusicGen.SERTANEJO, artist.getName());
+
+        // Envia uma solicitação POST para /musics com o DTO de criação de música e verifica a resposta
         var response = this.mockMvc.perform(post("/musics")
-                .contentType("application/json")
-                .content(this.musicCreateDTOJacksonTester.write(musicCreateDTO).getJson()))
+                        .contentType("application/json")
+                        .content(this.musicCreateDTOJacksonTester.write(musicCreateDTO).getJson()))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
