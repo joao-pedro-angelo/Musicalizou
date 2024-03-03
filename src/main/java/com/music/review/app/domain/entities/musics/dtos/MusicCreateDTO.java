@@ -14,6 +14,9 @@ public record MusicCreateDTO(
         @NotNull
         @Enumerated(EnumType.STRING)
         @Valid
-        MusicGen musicGen
+        MusicGen musicGen,
+
+        @NotBlank
+        String artist
 ) {
 }

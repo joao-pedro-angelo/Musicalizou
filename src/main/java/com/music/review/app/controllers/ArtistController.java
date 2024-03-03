@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("artists")
 public class ArtistController {
@@ -34,9 +36,15 @@ public class ArtistController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<ArtistGetDTO> findById(@PathVariable String name) {
+    public ResponseEntity<ArtistGetDTO> findByName(@PathVariable String name) {
         ArtistGetDTO artist = artistService.findArtistByName(name);
         return ResponseEntity.ok(artist);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ArtistGetDTO>> findAll() {
+        List<ArtistGetDTO> artists = artistService.findAllArtists();
+        return ResponseEntity.ok(artists);
     }
 
     @PutMapping

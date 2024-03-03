@@ -1,5 +1,6 @@
 package com.music.review.app.domain.entities.musics;
 
+import com.music.review.app.domain.entities.artists.Artist;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
 import com.music.review.app.domain.entities.musics.enums.MusicGen;
@@ -27,6 +28,10 @@ public class Music {
     @Column(name = "music_gen")
     private MusicGen musicGen;
 
+    @ManyToOne
+    @JoinColumn(name = "artist_id")
+    private Artist artist;
+
     public Music(MusicCreateDTO musicCreateDTO){
         this.nameMusic = musicCreateDTO.nameMusic();
         this.musicGen = musicCreateDTO.musicGen();
@@ -35,5 +40,9 @@ public class Music {
     public void updateMusic(MusicUpdateDTO musicUpdateDTO){
         if (musicUpdateDTO.nameMusic() != null) this.nameMusic = musicUpdateDTO.nameMusic();
         if (musicUpdateDTO.musicGen() != null) this.musicGen = musicUpdateDTO.musicGen();
+    }
+
+    public String nameArtist(){
+        return this.artist.getName();
     }
 }
