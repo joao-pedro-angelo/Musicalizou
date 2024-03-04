@@ -25,8 +25,8 @@ public class ArtistService {
 
     public ArtistGetDTO createArtist(ArtistCreateDTO artistCreateDTO) {
         Artist artist = new Artist(artistCreateDTO);
-        Artist savedArtist = artistRepository.save(artist);
-        return new ArtistGetDTO(savedArtist);
+        this.artistRepository.save(artist);
+        return new ArtistGetDTO(artist);
     }
 
     public ArtistGetDTO findArtistById(Long id) {
