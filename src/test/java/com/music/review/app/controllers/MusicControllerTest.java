@@ -1,11 +1,11 @@
 package com.music.review.app.controllers;
 
 import com.music.review.app.domain.entities.artists.Artist;
-import com.music.review.app.domain.entities.artists.dtos.ArtistCreateDTO;
 import com.music.review.app.domain.entities.musics.Music;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
 import com.music.review.app.domain.entities.musics.enums.MusicGen;
+import com.music.review.app.domain.repositories.ArtistRepository;
 import com.music.review.app.domain.repositories.MusicRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,6 +39,9 @@ public class MusicControllerTest {
     @Autowired
     private MusicRepository musicRepository;
 
+    @Autowired
+    private ArtistRepository artistRepository;
+
     @Test
     @DisplayName("Deve devolver código 400 - Informações Inválidas")
     void createMusicInvalidData() throws Exception{
@@ -53,7 +56,7 @@ public class MusicControllerTest {
     @DisplayName("Deve devolver código 201 - Created")
     void createMusicValidData() throws Exception {
         // Cria um artista para associar à música
-        Artist artist = new Artist(new ArtistCreateDTO("Artista Teste", "1990", "Brasil", "Biografia do Artista"));
+        Artist artist = new Artist(100L, "Ana Castela", "Teste", "Teste", "Teste");
 
         // Cria um DTO de criação de música com os dados válidos, incluindo o nome do artista
         MusicCreateDTO musicCreateDTO = new MusicCreateDTO("Balanço da Rede", MusicGen.SERTANEJO, artist.getName());
@@ -62,7 +65,7 @@ public class MusicControllerTest {
         var response = this.mockMvc.perform(post("/musics")
                         .contentType("application/json")
                         .content(this.musicCreateDTOJacksonTester.write(musicCreateDTO).getJson()))
-                .andReturn().getResponse();
+                        .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
     }
@@ -125,8 +128,10 @@ public class MusicControllerTest {
     @DisplayName("Update bem sucedido")
     void updateMusic() throws Exception{
         Music music = new Music();
+        Artist artist = this.artistRepository.findArtistByName("Ana Castela").orElse(null);
         music.setNameMusic("Existo");
         music.setMusicGen(MusicGen.OUTRO);
+        music.setArtist(artist);
         this.musicRepository.save(music);
 
         MusicUpdateDTO musicUpdateDTO = new MusicUpdateDTO(music.getId(), "NaoExisto", MusicGen.SERTANEJO);

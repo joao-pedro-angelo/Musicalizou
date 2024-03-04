@@ -32,9 +32,10 @@ public class Music {
     @JoinColumn(name = "artist_id")
     private Artist artist;
 
-    public Music(MusicCreateDTO musicCreateDTO){
+    public Music(MusicCreateDTO musicCreateDTO, Artist artist){
         this.nameMusic = musicCreateDTO.nameMusic();
         this.musicGen = musicCreateDTO.musicGen();
+        this.artist = artist;
     }
 
     public void updateMusic(MusicUpdateDTO musicUpdateDTO){

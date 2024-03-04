@@ -37,7 +37,7 @@ public class ArtistController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<ArtistGetDTO> findByName(@PathVariable String name) {
-        ArtistGetDTO artist = artistService.findArtistByName(name);
+        ArtistGetDTO artist = new ArtistGetDTO(artistService.findArtistByName(name));
         return ResponseEntity.ok(artist);
     }
 

@@ -39,11 +39,10 @@ public class ArtistService {
         }
     }
 
-    public ArtistGetDTO findArtistByName(String name){
+    public Artist findArtistByName(String name){
         Optional<Artist> optionalArtist = artistRepository.findArtistByName(name);
         if (optionalArtist.isPresent()){
-            Artist artist = optionalArtist.get();
-            return new ArtistGetDTO(artist);
+            return optionalArtist.get();
         } else throw new EntityNotFoundException("Artista não encontrada - name: " + name);
     }
 

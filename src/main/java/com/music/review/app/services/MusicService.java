@@ -1,5 +1,6 @@
 package com.music.review.app.services;
 
+import com.music.review.app.domain.entities.artists.Artist;
 import com.music.review.app.domain.entities.musics.Music;
 import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicGetDTO;
@@ -18,13 +19,17 @@ public class MusicService {
 
     private final MusicRepository musicRepository;
 
+    private final ArtistService artistService;
+
     @Autowired
-    public MusicService(MusicRepository musicRepository){
+    public MusicService(MusicRepository musicRepository, ArtistService artistService){
         this.musicRepository = musicRepository;
+        this.artistService = artistService;
     }
 
     public MusicGetDTO saveMusic(MusicCreateDTO musicCreateDTO){
-        Music music = new Music(musicCreateDTO);
+        Artist artist = this.artistService.findArtistByName(musicCreateDTO.artist());
+        Music music = new Music(musicCreateDTO, artist);
         this.musicRepository.save(music);
         return new MusicGetDTO(music);
     }
