@@ -34,23 +34,14 @@ public class MusicService {
         return new MusicGetDTO(music);
     }
 
-    public MusicGetDTO findById(Long id){
-        Optional<Music> optionalMusic = this.musicRepository.findById(id);
-        if (optionalMusic.isPresent()){
-            Music music = optionalMusic.get();
-            return new MusicGetDTO(music);
-        } else {
-            throw new EntityNotFoundException("Não há música com o ID: " + id);
-        }
+    public Music findById(Long id){
+        return this.musicRepository.getReferenceById(id);
     }
 
     public Music findByName(String nameMusic){
-        Optional<Music> optionalMusic = this.musicRepository.findByNameMusic(nameMusic);
-        if (optionalMusic.isPresent()){
-            return optionalMusic.get();
-        } else{
-            throw new EntityNotFoundException("Não há música com este nome: " + nameMusic);
-        }
+        Music music = this.musicRepository.getMusicByNameMusic(nameMusic);
+        if (music == null) throw new EntityNotFoundException();
+        return music;
     }
 
     public List<MusicGetDTO> findAll(){

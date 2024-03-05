@@ -33,32 +33,32 @@ public class MusicController {
 
     @GetMapping("/id/{idVar}")
     public ResponseEntity<MusicGetDTO> findMusicById(@PathVariable Long idVar){
-        MusicGetDTO musicGetDTO = this.musicService.findById(idVar);
-        return new ResponseEntity<>(musicGetDTO, HttpStatus.OK);
+        MusicGetDTO musicGetDTO = new MusicGetDTO(this.musicService.findById(idVar));
+        return ResponseEntity.ok(musicGetDTO);
     }
 
     @GetMapping("/name/{nameMusic}")
     public ResponseEntity<MusicGetDTO> findMusicByName(@PathVariable String nameMusic){
         MusicGetDTO musicGetDTO = new MusicGetDTO(this.musicService.findByName(nameMusic));
-        return new ResponseEntity<>(musicGetDTO, HttpStatus.OK);
+        return ResponseEntity.ok(musicGetDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<MusicGetDTO>> findAllMusics(){
-        return new ResponseEntity<>(this.musicService.findAll(), HttpStatus.OK);
+        return ResponseEntity.ok(this.musicService.findAll());
     }
 
     @DeleteMapping("/delete/{deleteId}")
     @Transactional
     public ResponseEntity<Object> deleteById(@PathVariable Long deleteId){
         this.musicService.deleteMusic(deleteId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<MusicGetDTO> updateMusic(@RequestBody @Valid MusicUpdateDTO musicUpdateDTO){
         MusicGetDTO musicGetDTO = this.musicService.update(musicUpdateDTO);
-        return new ResponseEntity<>(musicGetDTO, HttpStatus.OK);
+        return ResponseEntity.ok(musicGetDTO);
     }
 }
