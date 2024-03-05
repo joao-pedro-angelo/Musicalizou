@@ -39,7 +39,7 @@ public class ArtistService {
     }
 
     public List<ArtistGetDTO> findAllArtists() {
-        List<Artist> artists = artistRepository.findAll();
+        List<Artist> artists = this.artistRepository.findAll();
         return artists.stream()
                 .map(ArtistGetDTO::new)
                 .collect(Collectors.toList());
@@ -52,6 +52,6 @@ public class ArtistService {
     }
 
     public void deleteArtist(Long id) {
-        artistRepository.deleteById(id);
+        this.artistRepository.deleteById(id);
     }
 }
