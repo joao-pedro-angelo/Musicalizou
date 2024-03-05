@@ -39,7 +39,6 @@ public class ReviewController {
     @GetMapping("/get/{music}")
     public ResponseEntity<List<Review>> getReviews(@PathVariable String music){
         Music music1 = this.musicService.findByName(music);
-        return new ResponseEntity<>(this.reviewService.getReviewByMusicName(music1),
-                HttpStatus.OK);
+        return ResponseEntity.ok(this.reviewService.getReviewByMusicName(music1));
     }
 }
