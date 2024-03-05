@@ -29,21 +29,14 @@ public class ArtistService {
         return new ArtistGetDTO(artist);
     }
 
-    public ArtistGetDTO findArtistById(Long id) {
-        Optional<Artist> optionalArtist = artistRepository.findById(id);
-        if (optionalArtist.isPresent()) {
-            Artist artist = optionalArtist.get();
-            return new ArtistGetDTO(artist);
-        } else {
-            throw new EntityNotFoundException("Artista não encontrada - id: " + id);
-        }
+    public Artist findArtistById(Long id) {
+        return this.artistRepository.getReferenceById(id);
     }
 
     public Artist findArtistByName(String name){
-        Optional<Artist> optionalArtist = artistRepository.findArtistByName(name);
-        if (optionalArtist.isPresent()){
-            return optionalArtist.get();
-        } else throw new EntityNotFoundException("Artista não encontrada - name: " + name);
+        Artist artist = this.artistRepository.getArtistByName(name);
+        if (artist == null) throw new EntityNotFoundException();
+        return artist;
     }
 
     public List<ArtistGetDTO> findAllArtists() {

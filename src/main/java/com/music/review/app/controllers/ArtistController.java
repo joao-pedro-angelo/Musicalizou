@@ -31,7 +31,7 @@ public class ArtistController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<ArtistGetDTO> findById(@PathVariable Long id) {
-        ArtistGetDTO artist = artistService.findArtistById(id);
+        ArtistGetDTO artist = new ArtistGetDTO(artistService.findArtistById(id));
         return ResponseEntity.ok(artist);
     }
 
