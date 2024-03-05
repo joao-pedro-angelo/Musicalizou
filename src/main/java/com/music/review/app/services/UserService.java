@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,24 +28,14 @@ public class UserService {
         return new UserGetDTO(user);
     }
 
-    public UserGetDTO findById(Long id){
-        Optional<User> userOptional = this.userRepository.findById(id);
-        if (userOptional.isPresent()){
-            User user = userOptional.get();
-            return new UserGetDTO(user);
-        } else {
-            throw new EntityNotFoundException("User not found with id: " + id);
-        }
+    public User findById(Long id){
+        return this.userRepository.getReferenceById(id);
     }
 
-    public UserGetDTO findByEmail(String email){
-        Optional<User> userOptional = this.userRepository.findByEmail(email);
-        if (userOptional.isPresent()){
-            User user = userOptional.get();
-            return new UserGetDTO(user);
-        } else{
-            throw new EntityNotFoundException("User not found with email: " + email);
-        }
+    public User findByEmail(String email){
+        User user = this.userRepository.getUserByEmail(email);
+        if (user == null) throw new EntityNotFoundException();
+        return user;
     }
 
     public List<UserGetDTO> findAll(){
@@ -61,14 +50,9 @@ public class UserService {
     }
 
     public UserGetDTO update(UserUpdateDTO userUpdateDTO){
-        Optional<User> userOptional = this.userRepository.findById(userUpdateDTO.id());
-        if (userOptional.isPresent()){
-            User user = userOptional.get();
-            user.updateUser(userUpdateDTO);
-            return new UserGetDTO(user);
-        } else{
-            throw new EntityNotFoundException("Not found User with ID: " + userUpdateDTO.id());
-        }
+        User user = this.userRepository.getReferenceById(userUpdateDTO.id());
+        user.updateUser(userUpdateDTO);
+        return new UserGetDTO(user);
     }
 
 }

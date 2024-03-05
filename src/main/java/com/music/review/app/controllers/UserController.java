@@ -33,32 +33,32 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserGetDTO> findByIdUser(@PathVariable Long id){
-        UserGetDTO userGetDTO = this.userService.findById(id);
-        return new ResponseEntity<>(userGetDTO, HttpStatus.OK);
+        UserGetDTO userGetDTO = new UserGetDTO(this.userService.findById(id));
+        return ResponseEntity.ok(userGetDTO);
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<UserGetDTO> findByEmailUser(@PathVariable String email){
-        UserGetDTO userGetDTO = this.userService.findByEmail(email);
-        return new ResponseEntity<>(userGetDTO, HttpStatus.OK);
+        UserGetDTO userGetDTO = new UserGetDTO(this.userService.findByEmail(email));
+        return ResponseEntity.ok(userGetDTO);
     }
 
     @GetMapping
     public ResponseEntity<List<UserGetDTO>> findAllUsers(){
-        return new ResponseEntity<>(this.userService.findAll(), HttpStatus.OK);
+        return ResponseEntity.ok(this.userService.findAll());
     }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity<Object> deleteUser(@PathVariable Long id){
         this.userService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity<UserGetDTO> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO){
         UserGetDTO userGetDTO = this.userService.update(userUpdateDTO);
-        return new ResponseEntity<>(userGetDTO, HttpStatus.OK);
+        return ResponseEntity.ok(userGetDTO);
     }
 }
