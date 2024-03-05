@@ -52,14 +52,9 @@ public class MusicService {
     }
 
     public MusicGetDTO update(MusicUpdateDTO musicUpdateDTO){
-        Optional<Music> music = this.musicRepository.findById(musicUpdateDTO.id());
-        if (music.isPresent()){
-            Music musicPresent = music.get();
-            musicPresent.updateMusic(musicUpdateDTO);
-            return new MusicGetDTO(musicPresent);
-        } else {
-            throw new EntityNotFoundException("Não há música com o ID: " + musicUpdateDTO.id());
-        }
+        Music music = this.musicRepository.getReferenceById(musicUpdateDTO.id());
+        music.updateMusic(musicUpdateDTO);
+        return new MusicGetDTO(music);
     }
 
     public void deleteMusic(Long id){
