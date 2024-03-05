@@ -31,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(userGetDTO, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<UserGetDTO> findByIdUser(@PathVariable Long id){
         UserGetDTO userGetDTO = new UserGetDTO(this.userService.findById(id));
         return ResponseEntity.ok(userGetDTO);
@@ -48,7 +48,7 @@ public class UserController {
         return ResponseEntity.ok(this.userService.findAll());
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     @Transactional
     public ResponseEntity<Object> deleteUser(@PathVariable Long id){
         this.userService.deleteById(id);
