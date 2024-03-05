@@ -1,4 +1,4 @@
-package com.music.review.app.infra;
+package com.music.review.app.infra.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
