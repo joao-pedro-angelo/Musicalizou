@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,15 +46,9 @@ public class ArtistService {
     }
 
     public ArtistGetDTO updateArtist(ArtistUpdateDTO artistUpdateDTO) {
-        Optional<Artist> optionalArtist = artistRepository.findById(artistUpdateDTO.id());
-        if (optionalArtist.isPresent()) {
-            Artist artist = optionalArtist.get();
-            artist.updateArtist(artistUpdateDTO);
-            Artist updatedArtist = artistRepository.save(artist);
-            return new ArtistGetDTO(updatedArtist);
-        } else {
-            throw new EntityNotFoundException("Artist not found with id: " + artistUpdateDTO.id());
-        }
+        Artist artist = this.artistRepository.getReferenceById(artistUpdateDTO.id());
+        artist.updateArtist(artistUpdateDTO);
+        return new ArtistGetDTO(artist);
     }
 
     public void deleteArtist(Long id) {
