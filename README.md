@@ -1,6 +1,6 @@
 # Musicalizou
 
-> Musicalizou é uma API REST que permite aos desenvolvedores acessar e 
+> Musicalizou é uma API REST que permite aos usuários e desenvolvedores acessar e 
 > manipular dados de músicas, artistas e avaliações. 
 
 
