@@ -24,12 +24,18 @@
 - **Lombok**;
 - **MySQL**; 
 - **Migrations com Flyway**;
+- **Hashing de Senha com BCrypt**;
 - **JWT (JSON Web Tokens)**;
 - **Swagger para documentação**.
 
 
 ---
 ## Como Executar
+
+0. **Usuário padrão - Login:**
+    - http://localhost:8080/login
+    - userTest@gmail.com
+    - 123456
 
 1. **Configuração do Ambiente:**
     - Certifique-se de ter o Java JDK e o MySQL instalados em sua máquina.
