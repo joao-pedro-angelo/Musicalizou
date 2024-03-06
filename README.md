@@ -32,11 +32,6 @@
 ---
 ## Como Executar
 
-0. **Usuário padrão - Login:**
-    - http://localhost:8080/login
-    - userTest@gmail.com
-    - 123456
-
 1. **Configuração do Ambiente:**
     - Certifique-se de ter o Java JDK e o MySQL instalados em sua máquina.
     - Clone o repositório do Musicalizou para o seu ambiente local.
@@ -49,8 +44,12 @@
     - Execute o aplicativo Spring Boot.
 
 4. **Acesso à API:**
-    - Acesse a API RESTful em `http://localhost:8080/{endPoint}`.
+    - Acesse a API RESTful em `http://localhost:8080/login`.
     - Pode utilizar o Postman para realizar requisições.
+
+5. **Usuário padrão - Login:**
+    - basicUser@gmail.com
+    - 123456
 
 
 ---
