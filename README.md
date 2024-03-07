@@ -52,6 +52,9 @@
     - basicUser@gmail.com
     - 123456
 
+6. **Token**:
+    - Após o login, será retornado um Bearer Token.
+    - Utilize-o no campo *Authorization* do Postman.
 
 ---
 ## Melhorias para o futuro
