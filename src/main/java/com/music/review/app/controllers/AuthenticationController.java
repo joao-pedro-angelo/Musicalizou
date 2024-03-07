@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
-public class AutenticationController {
+public class AuthenticationController {
 
     private final AuthenticationManager manager;
     private final Tokens tokens;
 
     @Autowired
-    public AutenticationController(AuthenticationManager manager, Tokens tokens){
+    public AuthenticationController(AuthenticationManager manager, Tokens tokens){
         this.manager = manager;
         this.tokens = tokens;
     }
