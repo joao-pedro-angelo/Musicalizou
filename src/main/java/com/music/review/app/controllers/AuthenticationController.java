@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("login")
+@RequestMapping("/login")
 public class AuthenticationController {
 
     private final AuthenticationManager manager;
@@ -26,7 +26,7 @@ public class AuthenticationController {
         this.tokens = tokens;
     }
 
-    @PostMapping
+    @PostMapping("/do")
     public ResponseEntity<String> login(@RequestBody @Valid DataLogin dataLogin){
         var dataLoginSpring = new UsernamePasswordAuthenticationToken(dataLogin.email(), dataLogin.password());
         var authentication = this.manager.authenticate(dataLoginSpring);
