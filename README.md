@@ -54,10 +54,11 @@
 
 
 ---
-## Ideia de Melhoria
+## Melhorias para o futuro
 
-- **Desenvolvimento do Front-end:** Embora a API REST do Musicalizou forneça acesso aos dados, uma interface de usuário (UI) pode ser desenvolvida e integrada para facilitar a interação com os recursos da API.
+- **Desenvolvimento do Front-end**: Embora a API REST do Musicalizou forneça acesso aos dados, uma interface de usuário (UI) pode ser desenvolvida e integrada para facilitar a interação com os recursos da API.
 
+- **Preparação para o Deploy**: Realizar as modificações necessárias para o deploy da aplicação.
 
 ---
 ## Contribuição
