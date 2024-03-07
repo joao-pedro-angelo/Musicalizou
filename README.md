@@ -10,7 +10,8 @@
 - **Explorar Músicas**;
 - **Reviews das músicas**;
 - **Gerenciamento de Artistas**; 
-- **Login e controle de acesso**.
+- **Login e controle de acesso**;
+- **Histórico da Base de Dados (migrations)**.
 
 
 ---
