@@ -45,16 +45,17 @@
     - Execute o aplicativo Spring Boot.
 
 4. **Acesso à API:**
-    - Acesse a API RESTful em `http://localhost:8080/login`.
-    - Pode utilizar o Postman para realizar requisições.
+    http://localhost:8080/swagger-ui/index.html
+    ![telaInicial](images/telaInicialSwagger.png)
 
-5. **Usuário padrão - Login:**
-    - basicUser@gmail.com
-    - 123456
+5. **Realizar Login:**
+    ![loginExample](images/loginExample.png)
 
-6. **Token**:
-    - Após o login, será retornado um Bearer Token.
-    - Utilize-o no campo *Authorization* do Postman.
+6. **Copiar Token para autorização:**
+    ![tokenExample](images/TokenExample.png)
+
+7. **Requisições liberadas:**
+    ![requisicoesLiberadas](images/requisicoesLiberadas.png)
 
 ---
 ## Melhorias para o futuro
