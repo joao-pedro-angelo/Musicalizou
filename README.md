@@ -48,7 +48,8 @@
     http://localhost:8080/swagger-ui/index.html
     ![telaInicial](images/telaInicialSwagger.png)
 
-5. **Realizar Login:**
+5. **Realizar Login:** Observe o usuário padrão para login
+    na imagem.
     ![loginExample](images/loginExample.png)
 
 6. **Copiar Token para autorização:**
