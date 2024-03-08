@@ -52,7 +52,8 @@
     na imagem.
     ![loginExample](images/loginExample.png)
 
-6. **Copiar Token para autorização:**
+6. **Copiar Token para autorização:** O Token é o que foi retornado
+    no Login.
     ![tokenExample](images/tokenExample.png)
 
 7. **Requisições liberadas:**
