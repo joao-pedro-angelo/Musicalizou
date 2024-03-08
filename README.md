@@ -45,19 +45,21 @@
     - Execute o aplicativo Spring Boot.
 
 4. **Acesso à API:**
-    http://localhost:8080/swagger-ui/index.html
+    - URL de acesso: http://localhost:8080/swagger-ui/index.html
     ![telaInicial](images/telaInicialSwagger.png)
 
-5. **Realizar Login:** Observe o usuário padrão para login
-    na imagem.
+5. **Realizar Login:**
+    - email: basicUser@gmail.com
+    - password: 123456
     ![loginExample](images/loginExample.png)
 
-6. **Copiar Token para autorização:** O Token é o que foi retornado
+7. **Copiar Token para autorização:**
+   - O Token é o que foi retornado
     no Login.
     ![tokenExample](images/tokenExample.png)
 
-7. **Requisições liberadas:**
-    Depois de inserir o token no campo de autorização,
+9. **Requisições liberadas:**
+    - Depois de inserir o token no campo de autorização,
     todas as requisições estarão liberadas.
 
 ---
