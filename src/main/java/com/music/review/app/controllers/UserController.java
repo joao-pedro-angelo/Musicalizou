@@ -4,6 +4,7 @@ import com.music.review.app.domain.entities.users.dtos.UserCreateDTO;
 import com.music.review.app.domain.entities.users.dtos.UserGetDTO;
 import com.music.review.app.domain.entities.users.dtos.UserUpdateDTO;
 import com.music.review.app.services.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
     private final UserService userService;

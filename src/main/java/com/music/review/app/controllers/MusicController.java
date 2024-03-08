@@ -4,6 +4,7 @@ import com.music.review.app.domain.entities.musics.dtos.MusicCreateDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicGetDTO;
 import com.music.review.app.domain.entities.musics.dtos.MusicUpdateDTO;
 import com.music.review.app.services.MusicService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("musics")
+@SecurityRequirement(name = "bearer-key")
 public class MusicController {
 
     private final MusicService musicService;
