@@ -52,10 +52,11 @@
     ![loginExample](images/loginExample.png)
 
 6. **Copiar Token para autorização:**
-    ![tokenExample](images/TokenExample.png)
+    ![tokenExample](images/tokenExample.png)
 
 7. **Requisições liberadas:**
-    ![requisicoesLiberadas](images/requisicoesLiberadas.png)
+    Depois de inserir o token no campo de autorização,
+    todas as requisições estarão liberadas.
 
 ---
 ## Melhorias para o futuro
