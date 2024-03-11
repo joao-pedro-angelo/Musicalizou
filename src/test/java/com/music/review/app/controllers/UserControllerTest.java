@@ -25,6 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @AutoConfigureJsonTesters
+@Transactional
+@WithMockUser
 class UserControllerTest {
 
     @Autowired
@@ -41,8 +43,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Tenta cadastrar usuário com informações inválidas - código 400")
-    @WithMockUser
-    @Transactional
     void userWithInvalidData() throws Exception {
         var response = this.mockMvc.perform(post("/users"))
                 .andReturn().getResponse();
@@ -52,8 +52,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Cadastro de usuário com dados válidos - código 200")
-    @WithMockUser
-    @Transactional
     void userWithValidData() throws Exception{
         // Cria um DTO de criação de usuário com dados válidos
         UserCreateDTO userCreateDTO = new UserCreateDTO("username@gmail.com", "password");
@@ -72,8 +70,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar o usuário encontrado pelo ID")
-    @WithMockUser
-    @Transactional
     void findByIdUser() throws Exception {
         // Cria um usuário fictício com email e senha
         UserCreateDTO userCreateDTO = new UserCreateDTO("oi@gmail.com", "password");
@@ -93,8 +89,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Tenta encontrar usuário não cadastrado - código 404")
-    @WithMockUser
-    @Transactional
     void notFindUser() throws Exception{
         this.mockMvc.perform(get("/users/id/800")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -103,8 +97,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 404 - Not Found ao buscar um usuário por email não existente")
-    @WithMockUser
-    @Transactional
     void findByNonExistingEmail() throws Exception {
         // Faz uma solicitação GET para /users/email/{email} e verifica se a resposta tem status 404 (Not Found)
         mockMvc.perform(get("/users/email/emailnaoexistente@test.com")
@@ -114,8 +106,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 204 - No Content ao tentar excluir um usuário não existente")
-    @Transactional
-    @WithMockUser
     void deleteUserNotFound() throws Exception {
         // Faz uma solicitação DELETE para /users/delete/1 e verifica se a resposta tem status 200 (OK)
         this.mockMvc.perform(delete("/users/delete/900")
@@ -125,8 +115,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 404 - Not Found ao tentar atualizar um usuário não existente")
-    @Transactional
-    @WithMockUser
     void updateUserNotFound() throws Exception {
         // Faz uma solicitação PUT para /users e verifica se a resposta tem status 404 (Not Found)
         this.mockMvc.perform(put("/users")
@@ -137,8 +125,6 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 200 - OK ao atualizar um usuário existente")
-    @Transactional
-    @WithMockUser
     void updateUserExisting() throws Exception {
         // Cria um usuário fictício com email e senha
         UserCreateDTO userCreateDTO = new UserCreateDTO("oi@gmail.com", "password");
