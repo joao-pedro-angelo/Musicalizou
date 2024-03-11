@@ -1,6 +1,6 @@
 # Musicalizou
 
-> Musicalizou é uma API REST que tem como principal objetivo promover a prática do desenvolvimento de aplicações com Java e Spring.
+> Musicalizou é uma API REST que tem como principal objetivo promover a prática no desenvolvimento de aplicações com Java e Spring.
 
 
 ---
