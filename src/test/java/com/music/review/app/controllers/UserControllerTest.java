@@ -108,7 +108,7 @@ class UserControllerTest {
     @DisplayName("Deve retornar status 204 - No Content ao tentar excluir um usuário não existente")
     void deleteUserNotFound() throws Exception {
         // Faz uma solicitação DELETE para /users/delete/1 e verifica se a resposta tem status 200 (OK)
-        this.mockMvc.perform(delete("/users/delete/900")
+        this.mockMvc.perform(delete("/users/900")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }

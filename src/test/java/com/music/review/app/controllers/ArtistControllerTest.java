@@ -185,7 +185,7 @@ class ArtistControllerTest {
         artist.setBio("Bio do artista para excluir");
         this.artistRepository.save(artist);
 
-        var response = this.mockMvc.perform(delete("/v1/artists/delete/{id}", artist.getId())
+        var response = this.mockMvc.perform(delete("/v1/artists/{id}", artist.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -195,7 +195,7 @@ class ArtistControllerTest {
     @Test
     @DisplayName("Tenta excluir artista não existente - código 204")
     void deleteNonExistingArtist() throws Exception {
-        var response = this.mockMvc.perform(delete("/v1/artists/delete/1000")
+        var response = this.mockMvc.perform(delete("/v1/artists/1000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 

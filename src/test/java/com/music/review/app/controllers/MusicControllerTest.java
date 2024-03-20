@@ -197,7 +197,7 @@ class MusicControllerTest {
         music.setArtist(artist);
         this.musicRepository.save(music);
 
-        var response = this.mockMvc.perform(delete("/v1/musics/delete/{id}", music.getId())
+        var response = this.mockMvc.perform(delete("/v1/musics/{id}", music.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -207,7 +207,7 @@ class MusicControllerTest {
     @Test
     @DisplayName("Tenta excluir música não existente - código 204")
     void deleteNonExistingMusic() throws Exception {
-        var response = this.mockMvc.perform(delete("/v1/musics/delete/1000")
+        var response = this.mockMvc.perform(delete("/v1/musics/1000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
