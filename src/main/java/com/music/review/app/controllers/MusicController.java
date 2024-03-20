@@ -9,13 +9,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("musics")
+@RequestMapping("v1/musics")
 @SecurityRequirement(name = "bearer-key")
 public class MusicController {
 
@@ -27,40 +26,38 @@ public class MusicController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<MusicGetDTO> createMusic(@RequestBody @Valid MusicCreateDTO musicCreateDTO){
-        MusicGetDTO musicGetDTO = this.musicService.saveMusic(musicCreateDTO);
-        return new ResponseEntity<>(musicGetDTO, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(this.musicService.saveMusic(musicCreateDTO));
     }
 
     @GetMapping("/id/{idVar}")
     public ResponseEntity<MusicGetDTO> findMusicById(@PathVariable Long idVar){
-        MusicGetDTO musicGetDTO = new MusicGetDTO(this.musicService.findById(idVar));
-        return ResponseEntity.ok(musicGetDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MusicGetDTO(this.musicService.findById(idVar)));
     }
 
     @GetMapping("/name/{nameMusic}")
     public ResponseEntity<MusicGetDTO> findMusicByName(@PathVariable String nameMusic){
-        MusicGetDTO musicGetDTO = new MusicGetDTO(this.musicService.findByName(nameMusic));
-        return ResponseEntity.ok(musicGetDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new MusicGetDTO(this.musicService.findByName(nameMusic)));
     }
 
     @GetMapping
     public ResponseEntity<List<MusicGetDTO>> findAllMusics(){
-        return ResponseEntity.ok(this.musicService.findAll());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.musicService.findAll());
     }
 
-    @DeleteMapping("/delete/{deleteId}")
-    @Transactional
+    @DeleteMapping("/{deleteId}")
     public ResponseEntity<Object> deleteById(@PathVariable Long deleteId){
         this.musicService.deleteMusic(deleteId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    @Transactional
     public ResponseEntity<MusicGetDTO> updateMusic(@RequestBody @Valid MusicUpdateDTO musicUpdateDTO){
-        MusicGetDTO musicGetDTO = this.musicService.update(musicUpdateDTO);
-        return ResponseEntity.ok(musicGetDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.musicService.update(musicUpdateDTO));
     }
 }

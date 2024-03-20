@@ -64,7 +64,7 @@ class MusicControllerTest {
         MusicCreateDTO musicCreateDTO = new MusicCreateDTO("Nome da música", MusicGen.OUTRO, artist.getName());
 
         // Requisição POST para criar uma música
-        var response = this.mockMvc.perform(post("/musics")
+        var response = this.mockMvc.perform(post("/v1/musics")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.musicCreateDTOJacksonTester.write(musicCreateDTO).getJson()))
                 .andReturn().getResponse();
@@ -76,7 +76,7 @@ class MusicControllerTest {
     @Test
     @DisplayName("Criar música inválida - código 400 Bad Request")
     void createInvalidMusic() throws Exception{
-        var response = this.mockMvc.perform(post("/musics"))
+        var response = this.mockMvc.perform(post("/v1/musics"))
                 .andReturn().getResponse();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
     }
@@ -84,7 +84,7 @@ class MusicControllerTest {
     @Test
     @DisplayName("Tenta encontrar música com ID não salvo - código 404")
     void findMusicNotFoundById() throws Exception{
-        this.mockMvc.perform(get("/musics/id/800")
+        this.mockMvc.perform(get("/v1/musics/id/800")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -98,7 +98,7 @@ class MusicControllerTest {
         music.setArtist(artist);
         this.musicRepository.save(music);
 
-        var response = this.mockMvc.perform(get("/musics/id/{id}", music.getId())
+        var response = this.mockMvc.perform(get("/v1/musics/id/{id}", music.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -116,7 +116,7 @@ class MusicControllerTest {
         music.setArtist(artist);
         this.musicRepository.save(music);
 
-        var response = this.mockMvc.perform(get("/musics/name/{name}", music.getNameMusic())
+        var response = this.mockMvc.perform(get("/v1/musics/name/{name}", music.getNameMusic())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -128,7 +128,7 @@ class MusicControllerTest {
     @Test
     @DisplayName("Tenta encontrar música não cadastrada pelo nome - código 404")
     void findMusicByNameNotFound() throws Exception {
-        this.mockMvc.perform(get("/musics/name/MusicaInexistente")
+        this.mockMvc.perform(get("/v1/musics/name/MusicaInexistente")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -148,7 +148,7 @@ class MusicControllerTest {
         music2.setArtist(artist);
         this.musicRepository.save(music2);
 
-        var response = this.mockMvc.perform(get("/musics")
+        var response = this.mockMvc.perform(get("/v1/musics")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -167,7 +167,7 @@ class MusicControllerTest {
 
         MusicUpdateDTO musicUpdateDTO = new MusicUpdateDTO(music.getId(), "Nome Atualizado", MusicGen.POP);
 
-        var response = this.mockMvc.perform(put("/musics")
+        var response = this.mockMvc.perform(put("/v1/musics")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.musicUpdateDTOJacksonTester.write(musicUpdateDTO).getJson()))
                 .andReturn().getResponse();
@@ -180,7 +180,7 @@ class MusicControllerTest {
     void updateNonExistingMusic() throws Exception {
         MusicUpdateDTO musicUpdateDTO = new MusicUpdateDTO(1000L, "Nome Atualizado", MusicGen.POP);
 
-        var response = this.mockMvc.perform(put("/musics")
+        var response = this.mockMvc.perform(put("/v1/musics")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.musicUpdateDTOJacksonTester.write(musicUpdateDTO).getJson()))
                 .andReturn().getResponse();
@@ -197,7 +197,7 @@ class MusicControllerTest {
         music.setArtist(artist);
         this.musicRepository.save(music);
 
-        var response = this.mockMvc.perform(delete("/musics/delete/{id}", music.getId())
+        var response = this.mockMvc.perform(delete("/v1/musics/delete/{id}", music.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -207,7 +207,7 @@ class MusicControllerTest {
     @Test
     @DisplayName("Tenta excluir música não existente - código 204")
     void deleteNonExistingMusic() throws Exception {
-        var response = this.mockMvc.perform(delete("/musics/delete/1000")
+        var response = this.mockMvc.perform(delete("/v1/musics/delete/1000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 

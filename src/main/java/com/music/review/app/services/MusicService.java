@@ -9,6 +9,7 @@ import com.music.review.app.domain.repositories.MusicRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class MusicService {
         this.artistService = artistService;
     }
 
+    @Transactional
     public MusicGetDTO saveMusic(MusicCreateDTO musicCreateDTO){
         Artist artist = this.artistService.findArtistByName(musicCreateDTO.artist());
         Music music = new Music(musicCreateDTO, artist);
@@ -50,12 +52,14 @@ public class MusicService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public MusicGetDTO update(MusicUpdateDTO musicUpdateDTO){
         Music music = this.musicRepository.getReferenceById(musicUpdateDTO.id());
         music.updateMusic(musicUpdateDTO);
         return new MusicGetDTO(music);
     }
 
+    @Transactional
     public void deleteMusic(Long id){
         this.musicRepository.deleteById(id);
     }
