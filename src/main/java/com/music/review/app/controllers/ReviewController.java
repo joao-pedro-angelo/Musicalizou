@@ -1,6 +1,5 @@
 package com.music.review.app.controllers;
 
-import com.music.review.app.domain.entities.musics.Music;
 import com.music.review.app.domain.entities.reviews.Review;
 import com.music.review.app.domain.entities.reviews.dtos.ReviewCreateDTO;
 import com.music.review.app.domain.entities.reviews.dtos.ReviewGetDTO;
@@ -11,13 +10,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("reviews")
+@RequestMapping("v1/reviews")
 @SecurityRequirement(name = "bearer-key")
 public class ReviewController {
 
@@ -31,16 +29,19 @@ public class ReviewController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<ReviewGetDTO> createReview(@RequestBody @Valid ReviewCreateDTO reviewCreateDTO){
-        Music music = this.musicService.findByName(reviewCreateDTO.musicName());
-        return new ResponseEntity<>(this.reviewService.createReview(reviewCreateDTO, music),
-                HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(this.reviewService.createReview(reviewCreateDTO,
+                        this.musicService.findByName(reviewCreateDTO.musicName())
+                        )
+                );
     }
 
-    @GetMapping("/get/{music}")
+    @GetMapping("/{music}")
     public ResponseEntity<List<Review>> getReviews(@PathVariable String music){
-        Music music1 = this.musicService.findByName(music);
-        return ResponseEntity.ok(this.reviewService.getReviewByMusicName(music1));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.reviewService.getReviewByMusicName(
+                        this.musicService.findByName(music))
+                );
     }
 }

@@ -57,7 +57,7 @@ class ReviewControllerTest {
     void createReviewForNonExistingMusic() throws Exception {
         ReviewCreateDTO reviewCreateDTO = new ReviewCreateDTO("MusicaInexistente", "Comentário da Review");
 
-        this.mockMvc.perform(post("/reviews")
+        this.mockMvc.perform(post("/v1/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.reviewCreateDTOJacksonTester.write(reviewCreateDTO).getJson()))
                 .andExpect(status().isNotFound());
@@ -68,7 +68,7 @@ class ReviewControllerTest {
     void createValidReview() throws Exception{
         ReviewCreateDTO reviewCreateDTO = new ReviewCreateDTO("Comment", this.music.getNameMusic());
 
-        this.mockMvc.perform(post("/reviews")
+        this.mockMvc.perform(post("/v1/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.reviewCreateDTOJacksonTester.write(reviewCreateDTO).getJson()))
                 .andExpect(status().isCreated());

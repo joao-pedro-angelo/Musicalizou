@@ -7,6 +7,7 @@ import com.music.review.app.domain.entities.reviews.dtos.ReviewGetDTO;
 import com.music.review.app.domain.repositories.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ReviewService {
         this.repository = repository;
     }
 
+    @Transactional
     public ReviewGetDTO createReview(ReviewCreateDTO reviewCreateDTO, Music music){
         Review review = new Review(reviewCreateDTO.comment(), music);
         this.repository.save(review);
