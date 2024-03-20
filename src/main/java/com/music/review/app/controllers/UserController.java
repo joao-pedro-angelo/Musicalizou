@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,40 +26,38 @@ public class UserController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<UserGetDTO> createUser(@RequestBody @Valid UserCreateDTO userCreateDTO){
-        UserGetDTO userGetDTO = this.userService.saveUser(userCreateDTO);
-        return new ResponseEntity<>(userGetDTO, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.userService.saveUser(userCreateDTO));
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<UserGetDTO> findByIdUser(@PathVariable Long id){
-        UserGetDTO userGetDTO = new UserGetDTO(this.userService.findById(id));
-        return ResponseEntity.ok(userGetDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new UserGetDTO(this.userService.findById(id)));
     }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<UserGetDTO> findByEmailUser(@PathVariable String email){
-        UserGetDTO userGetDTO = new UserGetDTO(this.userService.findByEmail(email));
-        return ResponseEntity.ok(userGetDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new UserGetDTO(this.userService.findByEmail(email)));
     }
 
     @GetMapping
     public ResponseEntity<List<UserGetDTO>> findAllUsers(){
-        return ResponseEntity.ok(this.userService.findAll());
+        return ResponseEntity.status(HttpStatus.OK).
+                body(this.userService.findAll());
     }
 
-    @DeleteMapping("/delete/{id}")
-    @Transactional
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id){
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    @Transactional
     public ResponseEntity<UserGetDTO> updateUser(@RequestBody @Valid UserUpdateDTO userUpdateDTO){
-        UserGetDTO userGetDTO = this.userService.update(userUpdateDTO);
-        return ResponseEntity.ok(userGetDTO);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.userService.update(userUpdateDTO));
     }
 }

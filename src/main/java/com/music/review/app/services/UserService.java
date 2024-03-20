@@ -8,6 +8,7 @@ import com.music.review.app.domain.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public UserGetDTO saveUser(UserCreateDTO userCreateDTO){
         User user = new User(userCreateDTO);
         this.userRepository.save(user);
@@ -45,10 +47,12 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void deleteById(Long id){
         this.userRepository.deleteById(id);
     }
 
+    @Transactional
     public UserGetDTO update(UserUpdateDTO userUpdateDTO){
         User user = this.userRepository.getReferenceById(userUpdateDTO.id());
         user.updateUser(userUpdateDTO);
