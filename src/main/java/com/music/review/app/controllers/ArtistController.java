@@ -9,13 +9,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("artists")
+@RequestMapping("v1/artists")
 @SecurityRequirement(name = "bearer-key")
 public class ArtistController {
 
@@ -27,39 +26,36 @@ public class ArtistController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<ArtistGetDTO> create(@RequestBody @Valid ArtistCreateDTO artistCreateDTO){
-        ArtistGetDTO createdArtist = this.artistService.createArtist(artistCreateDTO);
-        return new ResponseEntity<>(createdArtist, HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).
+                body(this.artistService.createArtist(artistCreateDTO));
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<ArtistGetDTO> findById(@PathVariable Long id) {
-        ArtistGetDTO artist = new ArtistGetDTO(this.artistService.findArtistById(id));
-        return ResponseEntity.ok(artist);
+        return ResponseEntity.status(HttpStatus.OK).
+                body(new ArtistGetDTO(this.artistService.findArtistById(id)));
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<ArtistGetDTO> findByName(@PathVariable String name) {
-        ArtistGetDTO artist = new ArtistGetDTO(this.artistService.findArtistByName(name));
-        return ResponseEntity.ok(artist);
+        return ResponseEntity.status(HttpStatus.OK).
+                body(new ArtistGetDTO(this.artistService.findArtistByName(name)));
     }
 
     @GetMapping
     public ResponseEntity<List<ArtistGetDTO>> findAll() {
-        List<ArtistGetDTO> artists = this.artistService.findAllArtists();
-        return ResponseEntity.ok(artists);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.artistService.findAllArtists());
     }
 
     @PutMapping
-    @Transactional
     public ResponseEntity<ArtistGetDTO> update(@RequestBody @Valid ArtistUpdateDTO artistUpdateDTO) {
-        ArtistGetDTO updatedArtist = this.artistService.updateArtist(artistUpdateDTO);
-        return ResponseEntity.ok(updatedArtist);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.artistService.updateArtist(artistUpdateDTO));
     }
 
-    @DeleteMapping("/delete/{id}")
-    @Transactional
+    @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Long id) {
         this.artistService.deleteArtist(id);
         return ResponseEntity.noContent().build();

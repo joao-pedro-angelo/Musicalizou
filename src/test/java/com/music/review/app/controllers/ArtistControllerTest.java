@@ -44,7 +44,7 @@ class ArtistControllerTest {
     @Test
     @DisplayName("Tenta cadastrar artista com informações inválidas - código 400")
     void createArtistWithInvalidData() throws Exception {
-        var response = this.mockMvc.perform(post("/artists"))
+        var response = this.mockMvc.perform(post("/v1/artists"))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
@@ -55,7 +55,7 @@ class ArtistControllerTest {
     void createArtistWithValidData() throws Exception {
         ArtistCreateDTO artistCreateDTO = new ArtistCreateDTO("Artista Teste", "2020", "Brasil", "Bio do artista");
 
-        var response = this.mockMvc.perform(post("/artists")
+        var response = this.mockMvc.perform(post("/v1/artists")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.artistCreateDTOJacksonTester.write(artistCreateDTO).getJson()))
                 .andReturn().getResponse();
@@ -73,7 +73,7 @@ class ArtistControllerTest {
         artist.setBio("Bio do artista");
         this.artistRepository.save(artist);
 
-        var response = this.mockMvc.perform(get("/artists/id/{id}", artist.getId())
+        var response = this.mockMvc.perform(get("/v1/artists/id/{id}", artist.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -85,7 +85,7 @@ class ArtistControllerTest {
     @Test
     @DisplayName("Tenta encontrar artista não cadastrado pelo ID - código 404")
     void findArtistByIdNotFound() throws Exception {
-        this.mockMvc.perform(get("/artists/id/1000")
+        this.mockMvc.perform(get("/v1/artists/id/1000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -100,7 +100,7 @@ class ArtistControllerTest {
         artist.setBio("Bio do artista");
         this.artistRepository.save(artist);
 
-        var response = this.mockMvc.perform(get("/artists/name/{name}", artist.getName())
+        var response = this.mockMvc.perform(get("/v1/artists/name/{name}", artist.getName())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -112,7 +112,7 @@ class ArtistControllerTest {
     @Test
     @DisplayName("Tenta encontrar artista não cadastrado pelo nome - código 404")
     void findArtistByNameNotFound() throws Exception {
-        this.mockMvc.perform(get("/artists/name/ArtistaInexistente")
+        this.mockMvc.perform(get("/v1/artists/name/ArtistaInexistente")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -134,7 +134,7 @@ class ArtistControllerTest {
         artist2.setBio("Bio do artista 2");
         this.artistRepository.save(artist2);
 
-        var response = this.mockMvc.perform(get("/artists")
+        var response = this.mockMvc.perform(get("/v1/artists")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -154,7 +154,7 @@ class ArtistControllerTest {
 
         ArtistUpdateDTO artistUpdateDTO = new ArtistUpdateDTO(artist.getId(), "Artista Atualizado", "2021", "EUA", "Nova bio do artista");
 
-        var response = this.mockMvc.perform(put("/artists")
+        var response = this.mockMvc.perform(put("/v1/artists")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.artistUpdateDTOJacksonTester.write(artistUpdateDTO).getJson()))
                 .andReturn().getResponse();
@@ -167,7 +167,7 @@ class ArtistControllerTest {
     void updateNonExistingArtist() throws Exception {
         ArtistUpdateDTO artistUpdateDTO = new ArtistUpdateDTO(1000L, "Artista Atualizado", "2021", "EUA", "Nova bio do artista");
 
-        var response = this.mockMvc.perform(put("/artists")
+        var response = this.mockMvc.perform(put("/v1/artists")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.artistUpdateDTOJacksonTester.write(artistUpdateDTO).getJson()))
                 .andReturn().getResponse();
@@ -185,7 +185,7 @@ class ArtistControllerTest {
         artist.setBio("Bio do artista para excluir");
         this.artistRepository.save(artist);
 
-        var response = this.mockMvc.perform(delete("/artists/delete/{id}", artist.getId())
+        var response = this.mockMvc.perform(delete("/v1/artists/delete/{id}", artist.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
@@ -195,7 +195,7 @@ class ArtistControllerTest {
     @Test
     @DisplayName("Tenta excluir artista não existente - código 204")
     void deleteNonExistingArtist() throws Exception {
-        var response = this.mockMvc.perform(delete("/artists/delete/1000")
+        var response = this.mockMvc.perform(delete("/v1/artists/delete/1000")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn().getResponse();
 
