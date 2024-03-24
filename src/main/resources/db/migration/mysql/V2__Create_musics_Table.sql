@@ -1,4 +1,4 @@
--- V3__Create_Musics_Table.sql
+-- V2__Create_Musics_Table.sql
 
 CREATE TABLE IF NOT EXISTS musics (
     id bigint not null auto_increment,

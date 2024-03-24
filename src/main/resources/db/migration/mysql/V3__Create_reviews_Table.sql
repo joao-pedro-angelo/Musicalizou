@@ -1,4 +1,4 @@
--- V2__Create_Reviews_Table.sql
+-- V3__Create_Reviews_Table.sql
 
 CREATE TABLE IF NOT EXISTS reviews (
         id bigint not null auto_increment,

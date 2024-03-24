@@ -1,6 +1,6 @@
--- V5__Populate_Artists_Table.sql
+-- V7__Populate_Artists_Table.sql
 
-INSERT INTO artists (name, year, country, bio) VALUES
+INSERT INTO artists (name, r__year, country, bio) VALUES
         ('Zé Neto & Cristiano', '2011', 'Brazil', 'Zé Neto & Cristiano é uma dupla sertaneja brasileira formada pelos cantores José Toscano Martins Neto e Irineu Vaccari Neto.'),
         ('Ana Castela', '1995', 'Brazil', 'Ana Castela é uma cantora e compositora sertaneja brasileira.'),
         ('Luis Fonsi', '1978', 'Puerto Rico', 'Luis Fonsi é um cantor, compositor e ator porto-riquenho.'),

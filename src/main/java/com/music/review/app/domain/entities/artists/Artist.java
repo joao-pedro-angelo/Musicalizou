@@ -19,6 +19,7 @@ public class Artist {
 
     private String name;
 
+    @Column(name = "r__year")
     private String year;
 
     private String country;

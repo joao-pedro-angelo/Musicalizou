@@ -1,4 +1,4 @@
--- V5__Add_Artist_Column_To_Musics_Table.sql
+-- V6__Add_Artist_Column_To_Musics_Table.sql
 
 ALTER TABLE musics
     ADD COLUMN artist_id bigint,
