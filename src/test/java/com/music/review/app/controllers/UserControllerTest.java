@@ -4,6 +4,8 @@ import com.music.review.app.domain.entities.users.User;
 import com.music.review.app.domain.entities.users.dtos.UserCreateDTO;
 import com.music.review.app.domain.entities.users.dtos.UserUpdateDTO;
 import com.music.review.app.domain.repositories.UserRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +45,31 @@ class UserControllerTest {
     @Autowired
     private UserRepository repository;
 
+    private User user;
+    private String jsonExpected;
+
+    @BeforeEach
+    void setUp() {
+        // Inicializa os dados antes de cada teste
+        UserCreateDTO userCreateDTO =
+                new UserCreateDTO("oi@gmail.com", "password");
+        User user = new User(userCreateDTO);
+        this.user = this.repository.save(user);
+
+        this.jsonExpected = "{\"id\":"
+                + this.user.getId()
+                + ",\"email\":\"oi@gmail.com\"}";
+    }
+
+    @AfterEach
+    void tearDown() {
+        // Limpa os dados após cada teste
+        this.repository.deleteAll();
+    }
+
     @Test
     @DisplayName("Tenta cadastrar usuário com informações inválidas - código 400")
-    void userWithInvalidData() throws Exception {
+    void userCreateFailed() throws Exception {
         var response = this.mockMvc.perform(post("/users"))
                 .andReturn().getResponse();
 
@@ -54,14 +78,17 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Cadastro de usuário com dados válidos - código 200")
-    void userWithValidData() throws Exception{
+    void userCreateSucess() throws Exception{
         // Cria um DTO de criação de usuário com dados válidos
-        UserCreateDTO userCreateDTO = new UserCreateDTO("username@gmail.com", "password");
+        UserCreateDTO userCreateDTO =
+                new UserCreateDTO("username@gmail.com", "password");
 
-        // Envia uma solicitação POST para /users com o DTO de criação de usuário e verifica a resposta
+        // Envia uma solicitação POST para /users com o DTO de criação de usuário
+        // e verifica a resposta
         var response = this.mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(this.userCreateDTOJacksonTester.write(userCreateDTO)
+                        .content(this.userCreateDTOJacksonTester
+                                .write(userCreateDTO)
                                 .getJson())
                 )
                 .andReturn().getResponse();
@@ -72,26 +99,22 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar o usuário encontrado pelo ID")
-    void findByIdUser() throws Exception {
-        // Cria um usuário fictício com email e senha
-        UserCreateDTO userCreateDTO = new UserCreateDTO("oi@gmail.com", "password");
-        User user = new User(userCreateDTO);
-        this.repository.save(user);
-
+    void findByIdUserSucess() throws Exception {
         // Faz uma solicitação GET para /users/id/{id} e verifica se a resposta tem status 200 (OK)
-        var response = this.mockMvc.perform(get("/users/id/{idUser}", user.getId())
+        var response = this.mockMvc.perform(get("/users/id/{idUser}",
+                        this.user.getId())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
         // Verifica se o conteúdo da resposta corresponde ao JSON esperado
-        String expectedJsonResponse = "{\"id\":" + user.getId() + ",\"email\":\"oi@gmail.com\"}";
-        assertThat(response.getResponse().getContentAsString()).isEqualTo(expectedJsonResponse);
+        assertThat(response.getResponse().getContentAsString())
+                .isEqualTo(this.jsonExpected);
     }
 
     @Test
     @DisplayName("Tenta encontrar usuário não cadastrado - código 404")
-    void notFindUser() throws Exception{
+    void findByIdUserFailed() throws Exception{
         this.mockMvc.perform(get("/users/id/800")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -99,8 +122,9 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 404 - Not Found ao buscar um usuário por email não existente")
-    void findByNonExistingEmail() throws Exception {
-        // Faz uma solicitação GET para /users/email/{email} e verifica se a resposta tem status 404 (Not Found)
+    void findByEmailFailed() throws Exception {
+        // Faz uma solicitação GET para /users/email/{email}
+        // e verifica se a resposta tem status 404 (Not Found)
         mockMvc.perform(get("/users/email/emailnaoexistente@test.com")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
@@ -108,8 +132,9 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 204 - No Content ao tentar excluir um usuário não existente")
-    void deleteUserNotFound() throws Exception {
-        // Faz uma solicitação DELETE para /users/delete/1 e verifica se a resposta tem status 200 (OK)
+    void deleteUserFailed() throws Exception {
+        // Faz uma solicitação DELETE para /users/delete/1
+        // e verifica se a resposta tem status 200 (OK)
         this.mockMvc.perform(delete("/users/900")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -117,7 +142,7 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 404 - Not Found ao tentar atualizar um usuário não existente")
-    void updateUserNotFound() throws Exception {
+    void updateUserFailed() throws Exception {
         // Faz uma solicitação PUT para /users e verifica se a resposta tem status 404 (Not Found)
         this.mockMvc.perform(put("/users")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -127,19 +152,16 @@ class UserControllerTest {
 
     @Test
     @DisplayName("Deve retornar status 200 - OK ao atualizar um usuário existente")
-    void updateUserExisting() throws Exception {
-        // Cria um usuário fictício com email e senha
-        UserCreateDTO userCreateDTO = new UserCreateDTO("oi@gmail.com", "password");
-        User user = new User(userCreateDTO);
-        this.repository.save(user);
-
+    void updateUserSucess() throws Exception {
         // Cria usuário para atualizar email
-        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(user.getId(), "novoemail@gmail.com", null);
+        UserUpdateDTO userUpdateDTO = new UserUpdateDTO(this.user.getId(),
+                "novoemail@gmail.com", null);
 
         // Requisição
         var response = this.mockMvc.perform(put("/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(this.userUpdateDTOJacksonTester.write(userUpdateDTO)
+                .content(this.userUpdateDTOJacksonTester
+                        .write(userUpdateDTO)
                         .getJson())
         ).andReturn().getResponse();
 
