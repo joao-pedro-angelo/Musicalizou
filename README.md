@@ -6,11 +6,11 @@
 ---
 ## Funcionalidades Principais
 
-- **Explorar Músicas**;
+- **Explorar músicas**;
 - **Reviews das músicas**;
 - **Gerenciar artistas**;
 - **Login e controle de acesso**;
-- **Histórico da Base de Dados (migrations)**.
+- **Histórico da base de dados (migrations)**.
 
 
 ---
@@ -23,7 +23,7 @@
 - **Lombok**;
 - **Validações**;
 - **JWT (JSON Web Tokens)**;
-- **Hashing de Senha com BCrypt**;
+- **Hashing de senha com BCrypt**;
 - **Migrations com Flyway**;
 - **Swagger para documentação**;
 - **Database exclusiva para testes - H2**;
