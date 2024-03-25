@@ -19,14 +19,28 @@
 - **Spring Security**;
 - **Spring Data JPA**;
 - **Spring Tests**;
-- **Validações**;
 - **Lombok**;
-- **Migrations com Flyway**;
-- **Hashing de Senha com BCrypt**;
+- **Validações**;
 - **JWT (JSON Web Tokens)**;
+- **Hashing de Senha com BCrypt**;
+- **Migrations com Flyway**;
 - **Swagger para documentação**;
+- **Database exclusiva para testes - H2**;
 - **Database exclusiva para produção - Mysql**;
-- **Database exclusiva para testes - H2**.
+
+
+---
+## Diretórios importantes
+
+- [Perfil de produção - application.properties](src/main/resources/application.properties)
+- [Perfil de testes - application-test.properties](src/test/resources/application-test.properties)
+- [Controllers](src/main/java/com/music/review/app/controllers)
+- [Services](src/main/java/com/music/review/app/services)
+- [Domain](src/main/java/com/music/review/app/domain)
+- [Infra](src/main/java/com/music/review/app/infra)
+- [Testes](src/test/java/com/music/review/app/controllers)
+- [Migrations de produção - Mysql](src/main/resources/db/migration/mysql)
+- [Migrations de testes - H2](src/main/resources/db/migration/h2)
 
 ---
 ## Como Executar
