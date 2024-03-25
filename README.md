@@ -6,8 +6,9 @@
 ---
 ## Funcionalidades Principais
 
-- **Listar Músicas e Artistas**;
+- **Explorar Músicas**;
 - **Reviews das músicas**;
+- **Gerenciar artistas**;
 - **Login e controle de acesso**;
 - **Histórico da Base de Dados (migrations)**.
 
