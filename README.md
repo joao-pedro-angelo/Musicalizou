@@ -6,9 +6,8 @@
 ---
 ## Funcionalidades Principais
 
-- **Explorar Músicas**;
+- **Listar Músicas e Artistas**;
 - **Reviews das músicas**;
-- **Gerenciamento de Artistas**; 
 - **Login e controle de acesso**;
 - **Histórico da Base de Dados (migrations)**.
 
@@ -22,12 +21,12 @@
 - **Spring Tests**;
 - **Validações**;
 - **Lombok**;
-- **MySQL**; 
 - **Migrations com Flyway**;
 - **Hashing de Senha com BCrypt**;
 - **JWT (JSON Web Tokens)**;
-- **Swagger para documentação**.
-
+- **Swagger para documentação**;
+- **Database exclusiva para produção - Mysql**;
+- **Database exclusiva para testes - H2**.
 
 ---
 ## Como Executar
@@ -67,7 +66,6 @@
 
 - **Desenvolvimento do Front-end**: Embora a API REST do Musicalizou forneça acesso aos dados, uma interface de usuário (UI) pode ser desenvolvida e integrada para facilitar a interação com os recursos da API.
 
-- **Preparação para o Deploy**: Realizar as modificações necessárias para o deploy da aplicação.
 
 ---
 ## Contribuição
