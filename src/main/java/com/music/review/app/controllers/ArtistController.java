@@ -27,20 +27,20 @@ public class ArtistController {
 
     @PostMapping
     public ResponseEntity<ArtistGetDTO> create(@RequestBody @Valid ArtistCreateDTO artistCreateDTO){
-        return ResponseEntity.status(HttpStatus.CREATED).
-                body(this.artistService.createArtist(artistCreateDTO));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(this.artistService.createArtist(artistCreateDTO));
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<ArtistGetDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.status(HttpStatus.OK).
-                body(new ArtistGetDTO(this.artistService.findArtistById(id)));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ArtistGetDTO(this.artistService.findArtistById(id)));
     }
 
     @GetMapping("/name/{name}")
     public ResponseEntity<ArtistGetDTO> findByName(@PathVariable String name) {
-        return ResponseEntity.status(HttpStatus.OK).
-                body(new ArtistGetDTO(this.artistService.findArtistByName(name)));
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ArtistGetDTO(this.artistService.findArtistByName(name)));
     }
 
     @GetMapping

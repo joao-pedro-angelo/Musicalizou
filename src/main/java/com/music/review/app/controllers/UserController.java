@@ -45,8 +45,8 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserGetDTO>> findAllUsers(){
-        return ResponseEntity.status(HttpStatus.OK).
-                body(this.userService.findAll());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(this.userService.findAll());
     }
 
     @DeleteMapping("/{id}")
