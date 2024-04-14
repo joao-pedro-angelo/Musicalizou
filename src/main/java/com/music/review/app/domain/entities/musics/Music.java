@@ -28,7 +28,7 @@ public class Music {
     @Column(name = "music_gen")
     private MusicGen musicGen;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
     private Artist artist;
 

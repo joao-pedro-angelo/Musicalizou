@@ -20,7 +20,7 @@ public class Review {
 
     private String comment;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "music_id")
     private Music music;
 
