@@ -56,6 +56,7 @@ public class UserService {
     public UserGetDTO update(UserUpdateDTO userUpdateDTO){
         User user = this.userRepository.getReferenceById(userUpdateDTO.id());
         user.updateUser(userUpdateDTO);
+        this.userRepository.save(user);
         return new UserGetDTO(user);
     }
 

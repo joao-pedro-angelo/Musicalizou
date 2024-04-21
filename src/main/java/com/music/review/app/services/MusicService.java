@@ -56,6 +56,7 @@ public class MusicService {
     public MusicGetDTO update(MusicUpdateDTO musicUpdateDTO){
         Music music = this.musicRepository.getReferenceById(musicUpdateDTO.id());
         music.updateMusic(musicUpdateDTO);
+        this.musicRepository.save(music);
         return new MusicGetDTO(music);
     }
 

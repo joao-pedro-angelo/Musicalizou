@@ -51,6 +51,7 @@ public class ArtistService {
     public ArtistGetDTO updateArtist(ArtistUpdateDTO artistUpdateDTO) {
         Artist artist = this.artistRepository.getReferenceById(artistUpdateDTO.id());
         artist.updateArtist(artistUpdateDTO);
+        this.artistRepository.save(artist);
         return new ArtistGetDTO(artist);
     }
 
