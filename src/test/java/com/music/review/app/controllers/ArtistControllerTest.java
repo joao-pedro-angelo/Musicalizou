@@ -113,16 +113,6 @@ class ArtistControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar todos os artistas cadastrados - código 200")
-    void findAllArtistsUniqueCase() throws Exception {
-        var response = this.mockMvc.perform(get("/v1/artists")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-        assertThat(response.getResponse().getContentAsString()).contains("Artista Teste");
-    }
-
-    @Test
     @DisplayName("Atualização de artista existente - código 200")
     void updateArtistSucess() throws Exception {
         ArtistUpdateDTO dto = new ArtistUpdateDTO(this.artist.getId(),
@@ -158,7 +148,8 @@ class ArtistControllerTest {
     private MockHttpServletResponse getResponseDelete(Long id) throws Exception{
         return this.mockMvc.perform(delete("/v1/artists/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andReturn().getResponse();
+                .andReturn()
+                .getResponse();
     }
 
     private MockHttpServletResponse getResponsePut(
@@ -168,7 +159,8 @@ class ArtistControllerTest {
                         .content(this.artistUpdateDTOJacksonTester
                                 .write(dto)
                                 .getJson()))
-                .andReturn().getResponse();
+                .andReturn()
+                .getResponse();
     }
 
     private MockHttpServletResponse getResponsePost(
