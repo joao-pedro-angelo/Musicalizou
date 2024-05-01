@@ -41,7 +41,6 @@
 - [Infra](src/main/java/com/music/review/app/infra)
 - [Testes](src/test/java/com/music/review/app/controllers)
 - [Migrations de produção - Mysql](src/main/resources/db/migration/mysql)
-- [Migrations de testes - H2](src/main/resources/db/migration/h2)
 
 ---
 ## Como Executar
