@@ -14,14 +14,16 @@ import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @WithMockUser
@@ -62,13 +64,8 @@ class ReviewControllerTest {
     void createReviewFailed() throws Exception {
         ReviewCreateDTO reviewCreateDTO = new ReviewCreateDTO
                 ("MusicaInexistente", "Comentário da Review");
-
-        this.mockMvc.perform(post("/v1/reviews")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(this.reviewCreateDTOJacksonTester
-                                .write(reviewCreateDTO)
-                                .getJson()))
-                .andExpect(status().isNotFound());
+        var response = this.getResponsePost(reviewCreateDTO);
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.NOT_FOUND.value());
     }
 
     @Test
@@ -76,12 +73,19 @@ class ReviewControllerTest {
     void createReviewSucess() throws Exception{
         ReviewCreateDTO reviewCreateDTO = new ReviewCreateDTO
                 ("Comment", this.music.getNameMusic());
+        var response = this.getResponsePost(reviewCreateDTO);
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
+    }
 
-        this.mockMvc.perform(post("/v1/reviews")
+
+    private MockHttpServletResponse getResponsePost(
+            ReviewCreateDTO dto) throws Exception{
+        return this.mockMvc.perform(post("/v1/reviews")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.reviewCreateDTOJacksonTester
-                                .write(reviewCreateDTO)
+                                .write(dto)
                                 .getJson()))
-                .andExpect(status().isCreated());
+                .andReturn()
+                .getResponse();
     }
 }
