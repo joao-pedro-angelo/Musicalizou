@@ -48,6 +48,7 @@
 1. **Configuração do Ambiente:**
     - Certifique-se de ter o Java JDK, o MySQL e o Maven instalados em sua máquina.
     - Caso não possua algum desses requisitos instalados, basta digitar `java --version`, `mvn --version` ou `mysql --version` e verificar o comando de instalação no Linux.
+    - Configuração do MySQL: [MySQL](https://github.com/joao-pedro-angelo/ClassicBank/blob/master/teoria/ConfigurarMysqlServer.md)
     - Clone o repositório do Musicalizou para o seu ambiente local.
 
 2. **Configuração do Banco de Dados:**
